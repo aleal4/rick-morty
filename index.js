@@ -16,12 +16,15 @@ const initApp = () => {
   for (let i = 1; i < 43; i++) {
     let requestURL = baseURL + i;
     let promise = getCharacters(requestURL);
-    console.log(promise);
+    promises.push(promise);
   }
 
   // Promise All - get all urls at the same time
-  Promise.all([promises]).then((value) => {
-    console.log(value);
+  Promise.all(promises).then((values) => {
+    console.log(values);
+
+    let cleanData = values.flat();
+    console.log(cleanData);
   });
 };
 
