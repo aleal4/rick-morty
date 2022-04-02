@@ -21,11 +21,34 @@ const initApp = () => {
 
   // Promise All - get all urls at the same time
   Promise.all(promises).then((values) => {
-    console.log(values);
-
     let cleanData = values.flat();
     console.log(cleanData);
+    buildApp(cleanData);
   });
 };
 
 initApp();
+
+const buildApp = (names) => {
+  let container = document.getElementById('character-container');
+
+  names.forEach((character) => {
+    let characterFlipCardContainer = document.createElement('div');
+    characterFlipCardContainer.classList.add('flip-card');
+
+    let characterFlipCardInner = document.createElement('div');
+    characterFlipCardInner.classList.add('flip-card-inner');
+
+    let characterFlipCardFront = document.createElement('div');
+    characterFlipCardFront.classList.add('flip-card-front');
+
+    let characterFlipCardBack = document.createElement('div');
+    characterFlipCardBack.classList.add('flip-card-back');
+
+    characterFlipCardInner.appendChild(characterFlipCardFront);
+    characterFlipCardInner.appendChild(characterFlipCardBack);
+
+    characterFlipCardContainer.appendChild(characterFlipCardInner);
+    container.appendChild(characterFlipCardContainer);
+  });
+};
