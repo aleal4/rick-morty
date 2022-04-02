@@ -29,10 +29,11 @@ const initApp = () => {
 
 initApp();
 
-const buildApp = (names) => {
+const buildApp = (character) => {
   let container = document.getElementById('character-container');
+  container.innerHTML = '';
 
-  names.forEach((character) => {
+  character.forEach((character) => {
     let characterFlipCardContainer = document.createElement('div');
     characterFlipCardContainer.classList.add('flip-card');
 
@@ -42,8 +43,16 @@ const buildApp = (names) => {
     let characterFlipCardFront = document.createElement('div');
     characterFlipCardFront.classList.add('flip-card-front');
 
+    let characterImage = document.createElement('img');
+    characterImage.src = character.image;
+    characterFlipCardFront.appendChild(characterImage);
+
     let characterFlipCardBack = document.createElement('div');
     characterFlipCardBack.classList.add('flip-card-back');
+
+    let characterName = document.createElement('h2');
+    characterName.textContent = character.name;
+    characterFlipCardBack.appendChild(characterName);
 
     characterFlipCardInner.appendChild(characterFlipCardFront);
     characterFlipCardInner.appendChild(characterFlipCardBack);
@@ -52,3 +61,19 @@ const buildApp = (names) => {
     container.appendChild(characterFlipCardContainer);
   });
 };
+
+const searchCharacters = (e) => {
+  e.preventDefault();
+  const userSearch = document.getElementById('searchInput').value.toLowerCase();
+
+  let baseURL = `https://rickandmortyapi.com/api/character?name=` + userSearch;
+  let searchPromise = getCharacters(baseURL);
+
+  Promise.all([searchPromise]).then((values) => {
+    let cleanData = values.flat();
+    buildApp(cleanData);
+  });
+};
+
+let form = document.getElementById('searchForm');
+form.addEventListener('submit', searchCharacters);
