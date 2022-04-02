@@ -13,7 +13,7 @@ const initApp = () => {
   let baseURL = `https://rickandmortyapi.com/api/character?page=`;
   let promises = [];
 
-  for (let i = 1; i < 12; i++) {
+  for (let i = 1; i < 5; i++) {
     let requestURL = baseURL + i;
     let promise = getCharacters(requestURL);
     promises.push(promise);
